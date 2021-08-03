@@ -1,11 +1,11 @@
 # Script to create the Backend Pool Virtual Machines (VMs) - VM-01, VM-02, VM-03
 
 az group create \
---name SL-AZ304-Assesment-Region1 \
---location westeurope
+--name SL-AZ304-Assesment-Region2 \
+--location northeurope
 
 az network vnet create \
---resource-group SL-AZ304-Assesment-Region1 \
+--resource-group SL-AZ304-Assesment-Region2 \
 --name AZ304-vNET \
 --address-prefix 10.0.0.0/16 \
 --subnet-name APPGW-SUBNET \
@@ -15,15 +15,15 @@ az network vnet subnet create \
 --address-prefixes 10.0.1.0/24 \
 --name BACKEND-SUBNET \
 --vnet-name AZ304-vNET \
---resource-group SL-AZ304-Assesment-Region1
+--resource-group SL-AZ304-Assesment-Region2
 
 # NSG for VM-01
 az network nsg create \
-  --resource-group SL-AZ304-Assesment-Region1 \
+  --resource-group SL-AZ304-Assesment-Region2 \
   --name NSG-VM-01
 
 az network nsg rule create \
-  --resource-group SL-AZ304-Assesment-Region1 \
+  --resource-group SL-AZ304-Assesment-Region2 \
   --name NSG-VM-01-ALLOW-HTTP \
   --nsg-name NSG-VM-01 \
   --protocol tcp \
@@ -36,7 +36,7 @@ az network nsg rule create \
   --priority 200
 
 az network nsg rule create \
-  --resource-group SL-AZ304-Assesment-Region1 \
+  --resource-group SL-AZ304-Assesment-Region2 \
   --name NSG-VM-01-ALLOW-SSH \
   --nsg-name NSG-VM-01\
   --protocol tcp \
@@ -51,7 +51,7 @@ az network nsg rule create \
 # Deploy VM-01
 
 az vm create \
-  --resource-group SL-AZ304-Assesment-Region1 \
+  --resource-group SL-AZ304-Assesment-Region2 \
   --name VM-01 \
   --admin-username adminuser \
   --admin-password adminadmin123! \
@@ -65,16 +65,16 @@ az vm extension set \
   --version 2.0 \
   --name CustomScript \
   --vm-name VM-01 \
-  --resource-group SL-AZ304-Assesment-Region1 \
+  --resource-group SL-AZ304-Assesment-Region2 \
   --settings '{"commandToExecute":"apt-get -y update && apt-get -y install apache2 && rm -rf /var/www/html && git clone https://github.com/XaaSTechnologies/AppGw-Default-Web-Page.github.io.git /var/www/html/"}'
 
 # NSG for VM-02
 az network nsg create \
-  --resource-group SL-AZ304-Assesment-Region1 \
+  --resource-group SL-AZ304-Assesment-Region2 \
   --name NSG-VM-02
 
 az network nsg rule create \
-  --resource-group SL-AZ304-Assesment-Region1 \
+  --resource-group SL-AZ304-Assesment-Region2 \
   --name NSG-VM-02-ALLOW-HTTP \
   --nsg-name NSG-VM-02 \
   --protocol tcp \
@@ -87,7 +87,7 @@ az network nsg rule create \
   --priority 200
 
 az network nsg rule create \
-  --resource-group SL-AZ304-Assesment-Region1 \
+  --resource-group SL-AZ304-Assesment-Region2 \
   --name NSG-VM-02-ALLOW-SSH \
   --nsg-name NSG-VM-02\
   --protocol tcp \
@@ -102,7 +102,7 @@ az network nsg rule create \
 # Deploy VM-02
 
 az vm create \
-  --resource-group SL-AZ304-Assesment-Region1 \
+  --resource-group SL-AZ304-Assesment-Region2 \
   --name VM-02 \
   --admin-username adminuser \
   --admin-password adminadmin123! \
@@ -116,17 +116,17 @@ az vm extension set \
   --version 2.0 \
   --name CustomScript \
   --vm-name VM-02 \
-  --resource-group SL-AZ304-Assesment-Region1 \
+  --resource-group SL-AZ304-Assesment-Region2 \
   --settings '{"commandToExecute":"apt-get -y update && apt-get -y install apache2 && rm -rf /var/www/html && git clone https://github.com/XaaSTechnologies/AppGw-Images-Web-Server.github.io.git /var/www/html/images"}'
 
 
 # NSG for VM-03
 az network nsg create \
-  --resource-group SL-AZ304-Assesment-Region1 \
+  --resource-group SL-AZ304-Assesment-Region2 \
   --name NSG-VM-03
 
 az network nsg rule create \
-  --resource-group SL-AZ304-Assesment-Region1 \
+  --resource-group SL-AZ304-Assesment-Region2 \
   --name NSG-VM-03-ALLOW-HTTP \
   --nsg-name NSG-VM-03 \
   --protocol tcp \
@@ -139,7 +139,7 @@ az network nsg rule create \
   --priority 200
 
 az network nsg rule create \
-  --resource-group SL-AZ304-Assesment-Region1 \
+  --resource-group SL-AZ304-Assesment-Region2 \
   --name NSG-VM-03-ALLOW-SSH \
   --nsg-name NSG-VM-03\
   --protocol tcp \
@@ -154,7 +154,7 @@ az network nsg rule create \
 # Deploy VM-03
 
 az vm create \
-  --resource-group SL-AZ304-Assesment-Region1 \
+  --resource-group SL-AZ304-Assesment-Region2 \
   --name VM-03 \
   --admin-username adminuser \
   --admin-password adminadmin123! \
@@ -168,6 +168,6 @@ az vm extension set \
   --version 2.0 \
   --name CustomScript \
   --vm-name VM-03 \
-  --resource-group SL-AZ304-Assesment-Region1 \
+  --resource-group SL-AZ304-Assesment-Region2 \
   --settings '{"commandToExecute":"apt-get -y update && apt-get -y install apache2 && rm -rf /var/www/html && git clone https://github.com/XaaSTechnologies/AppGw-Video-Web-Server.github.io.git /var/www/html/video"}'
 
